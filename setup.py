@@ -12,7 +12,7 @@ setup(
     author='Nolan Otam',
     license='MIT',
     install_requires=["requests"],
-    long_description=long_description,
     long_description_content_type='text/markdown',
+    long_description=long_description,
     url='https://github.com/NolanO64/python-jow-api'
 )
