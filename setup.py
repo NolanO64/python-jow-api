@@ -1,5 +1,9 @@
 from setuptools import setup,find_packages
 
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 setup(
     name='jow_api',
     packages=find_packages(),
@@ -7,5 +11,7 @@ setup(
     description='Simple Python API for Jow.fr',
     author='Nolan Otam',
     license='MIT',
-    install_requires=["requests"]
+    install_requires=["requests"],
+    long_description=long_description,
+    long_description_content_type='text/markdown'
 )
