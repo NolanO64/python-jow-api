@@ -22,9 +22,9 @@ recipe_dict = Jow.get_all(recipes_json)
 print(recipe_dict)
 
 ```
-The `api_call` function takes a search query as input, with an optional limit parameter,  and returns the raw JSON response from the Jow.fr API. To obtain the recipe data in a more readable format, you can use the `get` or `get_all` methods of the Jow class provided by the package.
+The `api_call` function takes a search query as input, with an optional limit parameter,  and returns a Recipe object (basically the raw JSON response from the Jow.fr API). To obtain the recipe data in a more readable format, you can use the `get_info`  methods of the Recipe class provided by the package.
 
-The get_all method takes the raw JSON response from the api_call function as input and returns a list of dictionaries, with each dictionary representing a recipe. Each recipe dictionary contains the following keys :
+The `get_info` method returns a list of dictionaries, with each dictionary representing a recipe. Each recipe dictionary contains the following keys :
 
 
 * `id` : The ID of the recipe.
