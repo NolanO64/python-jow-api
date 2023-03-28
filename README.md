@@ -16,27 +16,49 @@ The package provides convenient functions for searching and obtaining recipe inf
 ```python
 from jow_api import Jow
 
-recipes = Jow.api_call("poulet",5)
-readable_dict = recipes.get_info()
+# Perform a search for recipes containing the word "poulet"
+recipes = Jow.search("poulet", limit=5)
 
-print(readable_dict)
+# Loop through each recipe in the results and print its attributes
+print("\n",len(recipes))
+for recipe in recipes:
+    print(f"ID: {recipe.id}")
+    print(f"Name: {recipe.name}")
+    print(f"URL: {recipe.url}")
+    print(f"Description: {recipe.description}")
+    print(f"Preparation time: {recipe.preparationTime}")
+    print(f"Cooking time: {recipe.cookingTime}")
+    print(f"Preparation extra time per cover: {recipe.preparationExtraTimePerCover}")
+    print(f"Covers count: {recipe.coversCount}")
+    print("Ingredients:")
+    for ingredient in recipe.ingredients:
+        print(f"\t{ingredient.name}: {ingredient.quantity} {ingredient.unit}")
+        if ingredient.isOptional:
+            print("\t(optional)")
+    print()
 
 ```
-The `api_call` function takes a search query as input, with an optional limit parameter,  and returns a Recipe object (basically the raw JSON response from the Jow.fr API). To obtain the recipe data in a more readable format, you can use the `get_info`  methods of the Recipe class provided by the package.
+The Jow.search() function takes a search query as input, with an optional limit parameter, and returns a list of JowResult objects. Each JowResult object contains information about a single recipe, including its ID, name, URL on Jow.fr, and a list of ingredients.
 
-The `get_info` method returns a list of dictionaries, with each dictionary representing a recipe. Each recipe dictionary contains the following keys :
+Each JowResult object contains the following attributes:
 
+- `id` : The ID of the recipe.
+- `name` : The name of the recipe.
+- `url` : The URL of the recipe on Jow.fr.
+- `ingredients` : A list of Ingredient objects, each of which represents an ingredient used in the recipe.
+- `imageUrl` : The URL of the recipe image on Jow.fr.
+- `videoUrl` : The URL of the recipe video on Jow.fr.
+- `description` : A short description of the recipe.
+- `preparationTime` : The time required to prepare the recipe (in minutes).
+- `preparationExtraTimePerCover` : The extra time required to prepare the recipe for each additional serving.
+- `cookingTime` : The time required to cook the recipe (in minutes).
 
-* `id` : The ID of the recipe.
-* `name` : The name of the recipe.
-* `url` : The URL of the recipe on Jow.fr.
-* `ingredients` : A list of dictionaries where each dictionary corresponds to an ingredient used in the recipe and contains the following keys:
-    * `name` : The name of the ingredient.
-    * `quantity` : The quantity of the ingredient needed for the recipe.
-    * `unit` : The unit of measurement for the quantity of the ingredient.
-    * `isOptional` : A boolean value indicating whether the ingredient is optional or not.
+Each Ingredient object contains the following attributes:
 
-
+- `name` : The name of the ingredient.
+- `quantity` : The quantity of the ingredient needed for the recipe.
+- `unit` : The unit of measurement for the quantity of the ingredient.
+- `isOptional` : A boolean value indicating whether the ingredient is optional or not.
 
 ## License
 
