@@ -16,10 +16,10 @@ The package provides convenient functions for searching and obtaining recipe inf
 ```python
 from jow_api import Jow
 
-recipes_json = Jow.api_call("poulet rôti",40)
-recipe_dict = Jow.get_all(recipes_json)
+recipes = Jow.api_call("poulet",5)
+readable_dict = recipes.get_info()
 
-print(recipe_dict)
+print(readable_dict)
 
 ```
 The `api_call` function takes a search query as input, with an optional limit parameter,  and returns a Recipe object (basically the raw JSON response from the Jow.fr API). To obtain the recipe data in a more readable format, you can use the `get_info`  methods of the Recipe class provided by the package.
