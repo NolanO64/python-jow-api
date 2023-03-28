@@ -25,6 +25,7 @@ class JowResult:
         description=None,
         preparationTime=None,
         preparationExtraTimePerCover=None,
+        coversCount=None,
         cookingTime=None,
     ):
         self.id = id
@@ -37,17 +38,8 @@ class JowResult:
         self.preparationTime = preparationTime
         self.cookingTime = cookingTime
         self.preparationExtraTimePerCover = preparationExtraTimePerCover
+        self.coversCount = coversCount
         self.json = json
-
-    # To be defined...
-
-    # def get_info(self):
-    # return Jow.scrap_data([self])[0]
-
-
-class Recipe:
-    # To be defined...
-    pass
 
 
 class Jow:
@@ -57,7 +49,7 @@ class Jow:
         "accept-language": "fr,fr-FR;q=0.9,en-US;q=0.8,en;q=0.7",
     }
 
-    _OPTION_PARAMS = {"start": 1, "availabilityZoneId": "FR"}
+    _OPTION_PARAMS = {"start": 0, "availabilityZoneId": "FR"}
 
     _POST_HEADERS = {
         "accept": "application/json",
@@ -66,7 +58,7 @@ class Jow:
         "x-jow-withmeta": "1",
     }
 
-    _POST_PARAMS = {"start": "1", "availabilityZoneId": "FR"}
+    _POST_PARAMS = {"start": "0", "availabilityZoneId": "FR"}
 
     _SEARCH_URL = "https://api.jow.fr/public/recipe/quicksearch"
     _RECIPE_URL = "https://jow.fr/recipes/"
@@ -85,6 +77,7 @@ class Jow:
         "preparationExtraTimePerCover",
         "cookingTime",
         "preparationTime",
+        "coversCount",
     ]
 
     @classmethod
@@ -127,12 +120,6 @@ class Jow:
         recipes = cls.__get_info(response_json["data"])
 
         return recipes
-
-    # To be defined...
-
-    # @staticmethod
-    # def scrap_data(s_result):
-    #     pass
 
     @classmethod
     def __get_info(cls, recipes):
@@ -258,7 +245,11 @@ class Jow:
         Returns:
             str: video recipe url
         """
-        return Jow._STATIC_URL + recipe["videoUrl"]
+        return (
+            (Jow._STATIC_URL + recipe["videoUrl"])
+            if "videoUrl" in recipe and recipe["videoUrl"] != None
+            else None
+        )
 
     @staticmethod
     def __get_imageUrl(recipe):
@@ -270,7 +261,11 @@ class Jow:
         Returns:
             str: image recipe url
         """
-        return Jow._STATIC_URL + recipe["imageUrl"]
+        return (
+            (Jow._STATIC_URL + recipe["imageUrl"])
+            if "imageUrl" in recipe and recipe["imageUrl"] != None
+            else None
+        )
 
     @staticmethod
     def __get_description(recipe):
@@ -282,7 +277,7 @@ class Jow:
         Returns:
             str: recipe description
         """
-        return recipe["description"]
+        return recipe["description"] if "description" in recipe else None
 
     @staticmethod
     def __get_preparationTime(recipe):
@@ -294,7 +289,7 @@ class Jow:
         Returns:
             str: recipe preparation time
         """
-        return recipe["preparationTime"]
+        return recipe["preparationTime"] if "preparationTime" in recipe else None
 
     @staticmethod
     def __get_cookingTime(recipe):
@@ -306,7 +301,7 @@ class Jow:
         Returns:
             str: recipe cooking time
         """
-        return recipe["cookingTime"]
+        return recipe["cookingTime"] if "cookingTime" in recipe else None
 
     @staticmethod
     def __get_preparationExtraTimePerCover(recipe):
@@ -318,4 +313,20 @@ class Jow:
         Returns:
             str: recipe preparation extra time per cover
         """
-        return recipe["preparationExtraTimePerCover"]
+        return (
+            recipe["preparationExtraTimePerCover"]
+            if "preparationExtraTimePerCover" in recipe
+            else None
+        )
+
+    @staticmethod
+    def __get_coversCount(recipe):
+        """Get recipe covers count
+
+        Args:
+            recipe (dict): Json dictionnary of a recipe (returned from an api call)
+
+        Returns:
+            str: recipe covers count
+        """
+        return recipe["roundedCoversCount"] if "roundedCoversCount" in recipe else None

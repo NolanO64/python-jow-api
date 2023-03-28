@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 setup(
     name='jow_api',
     packages=find_packages(),
-    version='0.1.3',
+    version='0.1.4',
     description='Simple Python API for Jow.fr',
     author='Nolan Otam',
     license='MIT',
