@@ -20,7 +20,6 @@ from jow_api import Jow
 recipes = Jow.search("poulet", limit=5)
 
 # Loop through each recipe in the results and print its attributes
-print("\n",len(recipes))
 for recipe in recipes:
     print(f"ID: {recipe.id}")
     print(f"Name: {recipe.name}")
