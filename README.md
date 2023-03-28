@@ -7,7 +7,7 @@ This is a Python package that allows you to search for recipes on [Jow.fr](https
 You can install the package using [pip](https://pip.pypa.io/en/stable/) : 
 
 ```bash
-pip install python-jow-api
+pip install jow-api
 ```
 
 ## Usage
